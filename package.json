@@ -1,0 +1,11 @@
+{
+  "name": "model-object",
+  "version": "0.0.0",
+  "description": "Simple usage of JavaScript objcets as models with callbacks for computed properties.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peter Ajtai",
+  "license": "ISC"
+}
