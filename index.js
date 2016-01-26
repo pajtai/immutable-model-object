@@ -28,7 +28,7 @@ function setters(setterMethods) {
     _.forEach(setterMethods, function(setterMethod, key) {
         setterMethods[key] = function() {
             var result = setterMethod.apply(self, arguments);
-            this._calcs.forEach(function(calculationMethod) {
+            this._calcs && this._calcs.forEach(function(calculationMethod) {
                 calculationMethod.apply(self, arguments);
             });
             return result;
@@ -40,3 +40,4 @@ function setters(setterMethods) {
     return this;
 }
 
+// TODO: add default dot getters and setters

@@ -1,11 +1,17 @@
 {
   "name": "model-object",
-  "version": "0.0.0",
+  "version": "0.0.0-beta.1",
   "description": "Simple usage of JavaScript objcets as models with callbacks for computed properties.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Peter Ajtai",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.4.1"
+  },
+  "dependencies": {
+    "lodash": "^4.0.1"
+  }
 }
