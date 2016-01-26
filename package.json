@@ -1,6 +1,6 @@
 {
   "name": "model-object",
-  "version": "0.0.0-beta.1",
+  "version": "0.0.0",
   "description": "Simple usage of JavaScript objcets as models with callbacks for computed properties.",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "chai": "^3.4.1"
   },
   "dependencies": {
+    "get-setter": "0.0.0",
     "lodash": "^4.0.1"
   }
 }

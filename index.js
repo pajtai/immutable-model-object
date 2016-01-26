@@ -1,6 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash'),
+    getSetter = require('get-setter');
 
 function Model(dataSource) {
     if (! (this instanceof Model)) {
@@ -8,6 +9,15 @@ function Model(dataSource) {
     }
 
     this.model = dataSource;
+
+    this.get = function () {
+        return getSetter.get.apply(this.model, arguments);
+    };
+
+    this.setters({
+        set : function() {
+            return getSetter.set.apply(this.model, arguments); }
+    });
 }
 
 Model.prototype.setters = setters;
@@ -26,11 +36,14 @@ function setters(setterMethods) {
     var self = this;
 
     _.forEach(setterMethods, function(setterMethod, key) {
-        setterMethods[key] = function() {
+        setterMethods[key] = function(key, value, options) {
             var result = setterMethod.apply(self, arguments);
-            this._calcs && this._calcs.forEach(function(calculationMethod) {
-                calculationMethod.apply(self, arguments);
-            });
+            options = options || {};
+            if (this._calcs && !options.silent) {
+                _.forEach(this._calcs, function (calculationMethod, calulationKey) {
+                    self.set(calulationKey, calculationMethod.apply(self, arguments), {silent: true});
+                });
+            }
             return result;
         }
     });
