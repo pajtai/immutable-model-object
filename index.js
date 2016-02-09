@@ -1,56 +1,27 @@
 'use strict';
 
-var _ = require('lodash'),
-    getSetter = require('get-setter');
+var getSetter = require('get-setter'),
+    Immutable = require('immutable');
 
 function Model(dataSource) {
     if (! (this instanceof Model)) {
         return new Model(dataSource);
     }
 
-    this.model = dataSource;
-
-    this.get = function () {
-        return getSetter.get.apply(this.model, arguments);
-    };
-
-    this.setters({
-        set : function() {
-            return getSetter.set.apply(this.model, arguments); }
-    });
+    dataSource = dataSource || {};
+    this.model = Immutable.fromJS(dataSource);
 }
 
-Model.prototype.setters = setters;
-Model.prototype.calculations = calculations;
-
+Model.prototype.get = getMethod;
+Model.prototype.set = setMethod;
 module.exports = Model;
 
-function calculations(calcs) {
-
-    this._calcs = calcs;
-    return this;
+function getMethod() {
+    return getSetter.get.apply(this.model.toJS(), arguments);
 }
 
-function setters(setterMethods) {
-
-    var self = this;
-
-    _.forEach(setterMethods, function(setterMethod, key) {
-        setterMethods[key] = function(key, value, options) {
-            var result = setterMethod.apply(self, arguments);
-            options = options || {};
-            if (this._calcs && !options.silent) {
-                _.forEach(this._calcs, function (calculationMethod, calulationKey) {
-                    self.set(calulationKey, calculationMethod.apply(self, arguments), {silent: true});
-                });
-            }
-            return result;
-        }
-    });
-
-    _.extend(this, setterMethods);
-
-    return this;
+function setMethod() {
+    var data = this.model.toJS();
+    getSetter.set.apply(data, arguments);
+    this.model = Immutable.fromJS(data);
 }
-
-// TODO: add default dot getters and setters

@@ -1,18 +1,19 @@
 {
-  "name": "model-object",
+  "name": "immutable-model-object",
   "version": "0.0.0",
   "description": "Simple usage of JavaScript objcets as models with callbacks for computed properties.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/mocha/bin/mocha"
   },
   "author": "Peter Ajtai",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.4.1"
+    "chai": "^3.4.1",
+    "mocha": "^2.4.5"
   },
   "dependencies": {
     "get-setter": "0.0.0",
-    "lodash": "^4.0.1"
+    "immutable": "^3.7.6"
   }
 }
