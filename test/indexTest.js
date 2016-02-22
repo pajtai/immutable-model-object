@@ -24,6 +24,13 @@ describe('get method', function() {
         model.set('a.b.c', 'd');
         model.get('a.b.c').should.equal('d');
     });
+    it('should triple equal if not changed', function() {
+        var data = { a : {}},
+            model = Model(data),
+            obj = model.get('a');
+
+        obj.should.equal(model.get('a'));
+    });
 });
 
 describe('immutability', function() {
